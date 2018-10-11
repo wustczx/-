@@ -35,11 +35,40 @@ int partation(int arr[], int left, int right)
 	arr[i]=tmp;
 	return i;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+//两端扫描交换
+////////////////////////////////////////////////////////////////////////////
+void Swap(int arr[], int i, int j)
+{
+	int tmp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = tmp;
+}
+int DeSwapPartation(int arr[], int left, int right)
+{
+	int i = left+1,j=right;
+	int tmp = arr[left];
+	while(i<=j)
+	{
+		while(i<=j && arr[i]<tmp)
+			i++;
+		while(i<=j && arr[j]>=tmp)
+			j--;
+		if(i<j)
+		{
+			Swap(arr, i, j);
+		}
+	}
+	Swap(arr, j, left);
+	return j;
+}
+
 void quicksort(int arr[], int left, int right)
 {
 	if( left>right)
 		return;
-	int index=partation(arr, left, right);
+	int index=DeSwapPartation(arr, left, right);
 	quicksort(arr, left, index-1);
 	quicksort(arr, index+1, right);
 }
