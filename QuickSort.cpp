@@ -19,18 +19,10 @@ int partation(int arr[], int left, int right)
 	{
 		while(i<j && tmp<=arr[j])
 			j--;
-		if(i<j)
-		{
-			arr[i]=arr[j];
-			i++;
-		}
+		arr[i]=arr[j];
 		while(i<j && tmp>=arr[i])
 			i++;
-		if(i<j)
-		{
-			arr[j]=arr[i];
-			j--;
-		}
+		arr[j]=arr[i];
 	}
 	arr[i]=tmp;
 	return i;
@@ -68,7 +60,7 @@ void quicksort(int arr[], int left, int right)
 {
 	if( left>right)
 		return;
-	int index=DeSwapPartation(arr, left, right);
+	int index=partation(arr, left, right);
 	quicksort(arr, left, index-1);
 	quicksort(arr, index+1, right);
 }
