@@ -74,13 +74,37 @@ int forwardPartation(int arr[], int left, int right)
 	Swap(arr, i, left);
 	return i;
 }
+///////////////////////////////////////////////////////////////////////////
+//针对多重复元素，单向三分
+//////////////////////////////////////////////////////////////////////////
+void div3ScanPartation(int arr[], int left, int right, int* i, int* j)
+{
+	int k = left + 1, tmp = arr[left];
+	*i = left;
+	*j = right;
+	while(k<=*j)
+	{
+		if(arr[k]<tmp)
+		{
+			Swap(arr, *i, k);
+			(*i)++;
+			k++;
+		}else if(arr[k]>tmp){
+			Swap(arr, k, *j);
+			(*j)--;
+		}else{
+			k++;
+		}
+	}
+}
 void quicksort(int arr[], int left, int right)
 {
 	if( left>right)
 		return;
-	int index=forwardPartation(arr, left, right);
-	quicksort(arr, left, index-1);
-	quicksort(arr, index+1, right);
+	int i = 0, j = 0;
+	div3ScanPartation(arr, left, right, &i, &j);
+	quicksort(arr, left, i-1);
+	quicksort(arr, j+1, right);
 }
 
 
@@ -91,9 +115,9 @@ void quicksort(int arr[], int left, int right)
 /////////////////////////////////////////////////////////////////////////////
 int main()
 {
-	int a[]={1,2,5,1,4,3};
-	quicksort(a,0,5);
-	for(int i=0;i<6;i++)
+	int a[]={1,2,5,1,1,1,4,4,3};
+	quicksort(a,0,8);
+	for(int i=0;i<9;i++)
 	{
 		cout<<a[i];
 	}
