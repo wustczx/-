@@ -55,12 +55,30 @@ int DeSwapPartation(int arr[], int left, int right)
 	Swap(arr, j, left);
 	return j;
 }
-
+////////////////////////////////////////////////////////////////////
+//单向扫描
+///////////////////////////////////////////////////////////////////
+int forwardPartation(int arr[], int left, int right)
+{
+	int i = left, j = left+1;
+	int tmp = arr[left];
+	while(j<=right)
+	{
+		if(arr[j] < tmp)
+		{
+			i++;
+			Swap(arr, i, j);
+		}
+		j++;
+	}
+	Swap(arr, i, left);
+	return i;
+}
 void quicksort(int arr[], int left, int right)
 {
 	if( left>right)
 		return;
-	int index=partation(arr, left, right);
+	int index=forwardPartation(arr, left, right);
 	quicksort(arr, left, index-1);
 	quicksort(arr, index+1, right);
 }
