@@ -97,6 +97,45 @@ void div3ScanPartation(int arr[], int left, int right, int* i, int* j)
 		}
 	}
 }
+////////////////////////////////////////////////////////////////////////////////
+//双轴快排
+///////////////////////////////////////////////////////////////////////////////
+void dualPivotPartation(int arr[], int left, int right, int *i, int *j)
+{
+	if(arr[left] > arr[right])
+	{
+		Swap(arr, left, right);
+	}	
+	int pivot1 = arr[left], pivot2 = arr[right], k = left+1;
+	*i = left;
+	*j = right;
+	LOOP_Tag: while(k < *j)
+	{
+		if(arr[k] <pivot1)
+		{
+			Swap(arr, ++(*i), k++);
+		}else if(arr[k] <= pivot2)
+		{
+			k++;
+		}else{
+			while(arr[--(*j)]>pivot2){
+				if(*j<= k){
+					goto LOOP_Tag;
+				}
+			}
+			if(arr[*j]<pivot1)
+			{
+				Swap(arr, *j, k);
+				Swap(arr, ++(*i), k);
+			}else{
+				Swap(arr, *j, k);
+			}
+			k++;
+		}
+	}
+	Swap(arr, left, *i);
+	Swap(arr, right, *j);
+}
 void quicksort(int arr[], int left, int right)
 {
 	if( left>right)
@@ -104,6 +143,7 @@ void quicksort(int arr[], int left, int right)
 	int i = 0, j = 0;
 	div3ScanPartation(arr, left, right, &i, &j);
 	quicksort(arr, left, i-1);
+	quicksort(arr, i+1, j-1);
 	quicksort(arr, j+1, right);
 }
 
